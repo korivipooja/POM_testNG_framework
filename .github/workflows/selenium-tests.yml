@@ -26,5 +26,11 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
+      - name: Check Java version
+        run: java -version
+
+      - name: Check Maven version
+        run: mvn -version
+
       - name: Run Selenium Tests
-        run: mvn clean test
+        run: mvn clean test -e
