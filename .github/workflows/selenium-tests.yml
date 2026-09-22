@@ -33,4 +33,13 @@ jobs:
         run: mvn -version
 
       - name: Run Selenium Tests
-        run: mvn clean test -e
+        run: mvn clean test -e -X
+
+      - name: Upload Maven reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+              name: maven-test-reports
+              path: |
+                target/surefire-reports/
+                target/*.log
