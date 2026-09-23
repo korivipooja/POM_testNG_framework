@@ -5,11 +5,11 @@
 
 <suite name="POM_testNG">
 
-    <test name="Login Tests">
+    <test name="Automation Tests">
 
         <classes>
 
-            <class name="tests.LoginTest"/>
+            <class name="tests.CartTest"></class>
 
         </classes>
 
