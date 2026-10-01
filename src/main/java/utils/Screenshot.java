@@ -6,6 +6,7 @@ import org.openqa.selenium.TakesScreenshot;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 public class Screenshot {
     public static String takeScreenshot(String filename){
@@ -15,10 +16,10 @@ public class Screenshot {
        // source.renameTo(destination);
         try {
             Files.createDirectories(destination.getParent());
-            Files.copy(source.toPath(), destination);
+            Files.copy(source.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
 
             System.out.println("Screenshot saved" + destination.toAbsolutePath());
-            return destination.toString();
+            return destination.toAbsolutePath().toString();
         }catch (Exception e){
             e.printStackTrace();
             return null;

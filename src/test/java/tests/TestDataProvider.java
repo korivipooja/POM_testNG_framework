@@ -12,5 +12,10 @@ public class TestDataProvider {
 
     }
 
+    @DataProvider(name="checkoutData")
+    public Object[][] getCheckoutData() throws IOException {
+        return ExcelReader.getExcelData("D://Notes-For-Interview//projects//POM_testNG//src//main//resources//testdata//CheckoutData.xlsx","checkoutData");
+    }
+
 
 }

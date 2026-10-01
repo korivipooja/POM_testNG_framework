@@ -1,5 +1,8 @@
 package tests;
 import com.aventstack.extentreports.MediaEntityBuilder;
+import lombok.extern.java.Log;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
@@ -15,6 +18,7 @@ import java.lang.reflect.Method;
 import java.time.Duration;
 
 public class BaseTest {
+    private static final Logger logger= LogManager.getLogger(BaseTest.class);
     @BeforeSuite
     public void startReport(){
         ExtentReportManager.startReport();
@@ -39,6 +43,7 @@ public class BaseTest {
             ExtentReportManager.getTest().pass("Test passed successfully");
         }
         else if(result.getStatus()== ITestResult.FAILURE){
+            logger.error("Test failed:"+result.getName(),result.getThrowable());
             ExtentReportManager.getTest().fail(result.getThrowable());
            String screenshotpath= Screenshot.takeScreenshot(result.getName()+"FAILED");
             if(screenshotpath!=null){
