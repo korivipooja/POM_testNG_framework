@@ -12,7 +12,7 @@ import utils.DriverManager;
 
 public class CartTest extends BaseTest{
 
-    @Test(dataProvider = "checkoutData",dataProviderClass = TestDataProvider.class)
+    @Test(dataProvider = "checkoutData",dataProviderClass = TestDataProvider.class,groups={"smoke,regression"})
 
     public void addProductToCartTest(String username,String password,String firstname,String lastname,String zipcode){
         LoginPage loginPage=new LoginPage(DriverManager.getDriver());

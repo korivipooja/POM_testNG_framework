@@ -12,7 +12,7 @@ import utils.configReader;
 
 public class LoginTest extends BaseTest {
 
-    @Test(dataProvider = "loginData", dataProviderClass = TestDataProvider.class)
+    @Test(dataProvider = "loginData", dataProviderClass = TestDataProvider.class,groups={"smoke"})
     public void loginTest(String username, String password) {
         System.out.println("username:" + username);
         System.out.println("password:" + password);

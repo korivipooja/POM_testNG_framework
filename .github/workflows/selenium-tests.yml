@@ -10,7 +10,11 @@ on:
       - main
 
 jobs:
-  test:
+
+  # =========================
+  # SMOKE TEST JOB
+  # =========================
+  smoke-tests:
 
     runs-on: ubuntu-latest
 
@@ -32,14 +36,55 @@ jobs:
       - name: Check Maven version
         run: mvn -version
 
-      - name: Run Selenium Tests
-        run: mvn clean test -e -X
+      - name: Run Smoke Tests
+        run: mvn clean test "-DsuiteXmlFile=testng-smoke.xml"
 
-      - name: Upload Maven reports
+      - name: Upload Smoke Reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
-              name: maven-test-reports
-              path: |
-                target/surefire-reports/
-                target/*.log
+          name: smoke-test-reports
+          path: |
+            target/surefire-reports/
+            target/ExtentReport.html
+            screenshot/
+
+
+  # =========================
+  # REGRESSION TEST JOB
+  # =========================
+  regression-tests:
+
+    needs: smoke-tests
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Check Java version
+        run: java -version
+
+      - name: Check Maven version
+        run: mvn -version
+
+      - name: Run Regression Tests
+        run: mvn clean test "-DsuiteXmlFile=testng-regression.xml"
+
+      - name: Upload Regression Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: regression-test-reports
+          path: |
+            target/surefire-reports/
+            target/ExtentReport.html
+            screenshot/
